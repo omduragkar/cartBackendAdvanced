@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { response } = require('../helper/response');
+const { ADMIN } = require('../constants/type');
 
 const createJWT = (user) => {
     return jwt.sign({ userId:user}, process.env.JWT_SECRET, {
@@ -39,7 +40,7 @@ const protectAdminRoutes = async (req, res, next) => {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             // console.log(decoded)
             const userData = await User.findById(decoded.userId);
-            if(userData.role === "ADMIN"){
+            if(userData.role === ADMIN){
                 next();
             }else{
                 response(res, 401, "Not Authorized, No Admin Access!", null, true);

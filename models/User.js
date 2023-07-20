@@ -1,4 +1,5 @@
 const { Schema, default: mongoose } = require("mongoose");
+const { ADMIN, USER } = require("../constants/type");
 
 
 
@@ -17,8 +18,8 @@ const UserSchema = mongoose.Schema({
     ],
     role:{
         type:String,
-        enum:["ADMIN", "USER"],
-        default:"USER"
+        enum:[ ADMIN, USER],
+        default:USER
     },
     cartBillAmount:{
         type:Number,

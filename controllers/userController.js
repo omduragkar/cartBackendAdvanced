@@ -25,7 +25,7 @@ module.exports.getUserDataController = async (req, res) => {
     try {
         const { email, cart, cartBillAmount, cartTax, cartTotalAmount } = req.user;
         console.log(req.user)
-        response(res, 200, 'Account Details!', { email, cart, cartBillAmount, cartTax, cartTotalAmount}, false);
+        response(res, 200, 'Account Details!', { email, cart, cartBillAmount, cartTax, cartTotalAmount }, false);
 
 
     } catch (err) {
@@ -55,32 +55,36 @@ module.exports.loginController = async (req, res) => {
 
 
 module.exports.confirmOrderController = async (req, res) => {
-    const {cart} = req.user;
-    try {
-        let createOrder = await Order.create({
-            cart: cart,
-            userId: req.user._id,
-            billAmount: req.user.cartBillAmount,
-            taxAmount: req.user.cartTax,
-            totalAmount: req.user.cartTotalAmount
-        });
-        if(!createOrder)
-        {
-            response(res, 400, "Could not create order.", null, true);
-        }else{
-            let  placedOrder = await User.findByIdAndUpdate(req.user._id, {
-                $push: { orders: createOrder._id },
-                $set: { cart: [],  cartBillAmount:0, cartTax:0, cartTotalAmount:0}
-            }, { new: true });
-            if(!placedOrder)
-            {
-                response(res, 400, "Could not place order.", null, true);
-            }else{
-                response(res, 200, "Order placed successfully.", {createOrder, placedOrder}, false);
-            }
+    const { cart } = req.user;
 
+    try {
+        if (cart.length == 0) {
+            response(res, 400, "Cart is empty.", null, true);
+        } else {
+            let createOrder = await Order.create({
+                cart: cart,
+                userId: req.user._id,
+                billAmount: req.user.cartBillAmount,
+                taxAmount: req.user.cartTax,
+                totalAmount: req.user.cartTotalAmount
+            });
+            if (!createOrder) {
+                response(res, 400, "Could not create order.", null, true);
+            } else {
+                let placedOrder = await User.findByIdAndUpdate(req.user._id, {
+                    $push: { orders: createOrder._id },
+                    $set: { cart: [], cartBillAmount: 0, cartTax: 0, cartTotalAmount: 0 }
+                }, { new: true });
+                if (!placedOrder) {
+                    response(res, 400, "Could not place order.", null, true);
+                } else {
+                    response(res, 200, "Order placed successfully.", { createOrder, placedOrder }, false);
+                }
+
+            }
         }
-    }catch(err){
+
+    } catch (err) {
         console.log(err)
         response(res, 500, 'Could not confirm order!', err, true);
     }
@@ -94,18 +98,17 @@ module.exports.getAllOrdersController = async (req, res) => {
             populate: {
                 path: 'item',
                 model: 'Item'
-            }, 
+            },
 
-        },{
-            path:"userId",
+        }, {
+            path: "userId",
         }]);
-        if(!orders)
-        {
+        if (!orders) {
             response(res, 400, "Could not fetch orders.", null, true);
-        }else{
+        } else {
             response(res, 200, "Orders fetched successfully.", orders, false);
         }
-    }catch(err){
+    } catch (err) {
         console.log(err)
         response(res, 500, 'Could not fetch orders!', err, true);
     }
