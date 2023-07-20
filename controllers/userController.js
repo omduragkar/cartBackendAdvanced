@@ -3,6 +3,13 @@ const { createJWT } = require("../middleware/jwt");
 const Order = require("../models/Order");
 const User = require("../models/User");
 
+
+/**
+ * @description: This function creates a new user's account
+ * @param: req, res
+ * @returns: response
+ * @URL: /api/user/account = POST
+ */
 module.exports.createAccount = async (req, res) => {
     const { email, role = "USER" } = req.body;
     try {
@@ -21,6 +28,14 @@ module.exports.createAccount = async (req, res) => {
         response(res, 500, 'Could not create an account!', err, true);
     }
 }
+
+/**
+ * @description: This function gets the user's account
+ * @param: req, res
+ * @returns: response
+ * @URL: /api/cart/details = GET
+ * 
+ */
 module.exports.getUserDataController = async (req, res) => {
     try {
         const { email, cart, cartBillAmount, cartTax, cartTotalAmount } = req.user;
@@ -33,6 +48,14 @@ module.exports.getUserDataController = async (req, res) => {
         response(res, 500, 'Could not retreive account!', err, true);
     }
 }
+
+/**
+ * @description: This function gets the user's account as Login
+ * @param: req, res
+ * @returns: response
+ * @URL: /api/user/login = POST
+ * 
+ */
 
 module.exports.loginController = async (req, res) => {
     const { email } = req.body;
@@ -53,7 +76,13 @@ module.exports.loginController = async (req, res) => {
     }
 }
 
-
+/**
+ * @description: This function Confirms the order
+ * @param: req, res
+ * @returns: response
+ * @URL: /api/user/placeOrder = POST
+ * 
+ */
 module.exports.confirmOrderController = async (req, res) => {
     const { cart } = req.user;
 
@@ -90,7 +119,12 @@ module.exports.confirmOrderController = async (req, res) => {
     }
 }
 
-
+/**
+ * @description: This function gets all the orders as Admin
+ * @param: req, res
+ * @returns: response
+ *  * @URL: /api/user/allOrders = GET
+ */
 module.exports.getAllOrdersController = async (req, res) => {
     try {
         let orders = await Order.find().populate([{

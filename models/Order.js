@@ -1,5 +1,9 @@
 const { Schema, default: mongoose } = require("mongoose");
 
+/**
+ * @description: This is the order schema for the API
+ * 
+ */
 const OrderSchema = new mongoose.Schema({
   cart:[{
     type: mongoose.Schema.Types.ObjectId,

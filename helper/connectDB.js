@@ -1,5 +1,8 @@
 const { default: mongoose } = require("mongoose")
-
+/**
+ * @description: This is the connectDB helper function for the API
+ * 
+ */
 const connectDB = async () => {
     try{
         let dbConnection = await mongoose.connect(process.env.MONGO_URI, {

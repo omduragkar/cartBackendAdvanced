@@ -1,6 +1,12 @@
 const { response } = require("../helper/response");
 const Item = require("../models/Item");
 
+/**
+ * @description: This function gets all the items
+ * @param: req, res
+ * @returns: response
+ *  @URL: /api/items/ = GET
+ */
 module.exports.getItemsController = async (req, res) => {
     try {
         const Items = await Item.find();
@@ -9,6 +15,14 @@ module.exports.getItemsController = async (req, res) => {
         response(res, 500,  'Could not fetch products and services.', err, true);
     }
 }
+
+/**
+ * @description: This function creates a item
+ * @param: req, res
+ * @returns: response
+ *  @URL: /api/items/create = POST
+ * 
+ */
 module.exports.createItemsController = async (req, res) => {
     const { name, price, type="PRODUCT" } = req.body;
     try {

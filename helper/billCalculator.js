@@ -1,5 +1,12 @@
 const { PRODUCT, SERVICE } = require("../constants/type");
 
+/**
+ * @description: This is the helper function to calculate the bill amount, tax amount and total amount for an item
+ * @param {Object} item
+ * @param {Number} quantity
+ * @returns {Object} totalBill
+ * 
+ */
 const calculateItemValueHelper = (item, quantity) => {
     let totalBill = {
         billAmount: 0,
@@ -41,6 +48,13 @@ const calculateItemValueHelper = (item, quantity) => {
     return totalBill;
 };     
 
+/**
+ * @description: This is the function to calculate the bill amount, tax amount and total amount for an item [Exported Functions!]
+ * @param {Object} item
+ * @param {Number} quantity
+ * @returns {Object} totalBill
+ * 
+ */
 const calculateItemValue = async (item, quantity) => {
     let totalBill = await new Promise((resolve, reject) => {
         const totalBill = calculateItemValueHelper(item, quantity);
@@ -49,7 +63,12 @@ const calculateItemValue = async (item, quantity) => {
     return totalBill;
 }
 
-
+/**
+ * @description: This is the helper function to calculate the bill amount, tax amount and total amount for a cart
+ * @param {Array} cartItems
+ * @returns {Object} totalBill
+ * 
+ */
 const calculateCartValueHelper = (cartItems) => {
     let totalBill = {
         cartBillAmount: 0,
@@ -63,6 +82,12 @@ const calculateCartValueHelper = (cartItems) => {
     });
     return totalBill;
 }
+/**
+ * @description: This is the helper function to calculate the bill amount, tax amount and total amount for a cart[Exported function]
+ * @param {Array} cartItems
+ * @returns {Object} totalBill
+ * 
+ */
 const calculateCartValue = async (cart) => {
     let totalBill = await new Promise((resolve, reject) => {
         const totalBill = calculateCartValueHelper(cart);

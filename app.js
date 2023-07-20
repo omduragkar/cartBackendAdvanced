@@ -9,13 +9,18 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Connecting to the Database:
 connectDB();
 
 
 // Endpoints
+/**
+ * @description: This is the main route for the API
+ * 
+ */
 app.use("/api", require('./routes/api'));
 
-// Check Main URL
+// Last Route for checking if server is started or not!
 app.get("/", (req, res)=>{
     res.send("<h2>Plotline Assignment!</h2><p>APIs Server Started!</p>");
 })

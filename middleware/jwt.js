@@ -2,13 +2,23 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { response } = require('../helper/response');
 const { ADMIN } = require('../constants/type');
-
+/**
+ * @description: This function creates a JWT token for the user
+ * @param: user
+ * @returns: JWT token
+ */
 const createJWT = (user) => {
     return jwt.sign({ userId:user}, process.env.JWT_SECRET, {
         expiresIn: '30d',
     });
 }
 
+/**
+ * @description: This function protects the user routes
+ * @param: req, res, next
+ * @returns: next
+ * 
+ */
 const protectUserRoutes = async (req, res, next) => {
     // console.log("getUserData", req.headers.authorization)
     let token;
@@ -30,6 +40,11 @@ const protectUserRoutes = async (req, res, next) => {
     }
 }
 
+/**
+ * @description: This function protects the admin routes
+ * @param: req, res, next
+ * @returns: next
+ */
 const protectAdminRoutes = async (req, res, next) => {
     // console.log("getUserData", req.headers.authorization)
     let token;

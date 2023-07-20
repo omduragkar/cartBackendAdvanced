@@ -2,7 +2,9 @@ const { Schema, default: mongoose } = require("mongoose");
 const { ADMIN, USER } = require("../constants/type");
 
 
-
+/**
+ * @description: This is the user schema for the API
+ */
 
 
 const UserSchema = mongoose.Schema({

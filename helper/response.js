@@ -1,3 +1,11 @@
+/**
+ * @description: This file is used to send response to the client
+ * @param: response, status, message, data, error
+ * @returns: response
+ * 
+ */
+
+
 module.exports.response = (response, status, message, data, error=false)=>{
     if(error)
     {

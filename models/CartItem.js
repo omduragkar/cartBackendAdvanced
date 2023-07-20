@@ -1,5 +1,10 @@
 const { Schema, default: mongoose } = require("mongoose");
 
+/**
+ * @description: This is the cartItem schema for the API
+ * 
+ */
+
 const cartItemSchema = new mongoose.Schema({
   item: {
     type: mongoose.Schema.Types.ObjectId,

@@ -4,6 +4,12 @@ const { response } = require("../helper/response");
 const CARTITEM = require("../models/CartItem");
 const User = require("../models/User");
 
+/**
+ * @description: This function creates a cart for the user
+ * @param: req, res
+ * @returns: response
+ * @URL:/api/cart/add = POST
+ */
 module.exports.createCartController = async (req, res) => {
     try {
         const { itemId, quantity = 1 } = req.body;
@@ -86,6 +92,13 @@ module.exports.createCartController = async (req, res) => {
     }
 };
 
+/**
+ * @description: This function gets the cart for the user
+ * @param: req, res
+ * @returns: response
+ * @URL:/api/cart/remove = POST
+ * 
+ */
 module.exports.removeItemFromCartController = async (req, res) => {
     try {
         const { itemId } = req.body;
@@ -102,6 +115,14 @@ module.exports.removeItemFromCartController = async (req, res) => {
     }
 };
 
+
+/**
+ * @description: This function gets the cart for the user
+ * @param: req, res
+ * @returns: response
+ * @URL: /api/user/clear = POST
+
+ */
 module.exports.clearCartController = async (req, res) => {
     try {
         const deleteCartItems = await CARTITEM.deleteMany({ userId: req.user._id });
@@ -124,7 +145,13 @@ module.exports.clearCartController = async (req, res) => {
     }
 }
 
+/**
+ * @description: This function gets the cart for the user
+ * @param: req, res
+ * @returns: response
+ * @URL: /api/user/bill = GET
 
+ */
 module.exports.totalBillController =  async (req, res) => {
     try {
         const completeDetails = await User.findById(req.user._id).populate({

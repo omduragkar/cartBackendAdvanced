@@ -3,6 +3,11 @@ const { getItemsController, createItemsController } = require("./itemController"
 const { createCartController, removeItemFromCartController, clearCartController, totalBillController } = require("./cartContoller");
 
 
+/**
+ * @description: This is the main controller for the API
+ * 
+ */
+
 const Controller = {
     createUser:createAccount,
     loginUser:loginController,
